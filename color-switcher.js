@@ -11,6 +11,11 @@ const colors = [
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+const randomColor = () =>{
+ let color =`rgb(${randomIntegerFromInterval(0,255)},${randomIntegerFromInterval(0,255)},${randomIntegerFromInterval(0,255)})`;
+ return color;
+}
+
 const refs = {
 body: document.body,
 startBtn: document.querySelector('[data-action="start"]'),
@@ -20,10 +25,17 @@ stopBtn: document.querySelector('[data-action="stop"]'),
 refs.startBtn.addEventListener('click',onStartBtn);
 refs.stopBtn.addEventListener('click',onStopBtn);
 
-function onStartBtn() {
+let id = null;
 
+function onStartBtn(e) {
+ refs.startBtn.disabled = true;
+id = setInterval((e)=>{
+  let i = randomIntegerFromInterval(0,colors.length - 1);
+refs.body.style.backgroundColor = randomColor();
+},1000)
 }
 
 function onStopBtn() {
-    
+  refs.startBtn.disabled = false;
+    clearInterval(id)
 }
